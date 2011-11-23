@@ -87,9 +87,6 @@ else
  <tr>
   <th>Connection</th><td><?php echo $db_connect_result; ?></td>
  </tr>
- <tr>
-  <th>Driver</th><td><?php echo $mysql_driver; ?></td>
- </tr>
 <?php
 // reconnect to get extra info via mysql extension
 if (strpos($db_connect_result, 'Success'))
@@ -114,6 +111,25 @@ if (strpos($db_connect_result, 'Success'))
 			printf("<tr><th>Protocol version</th><td>%s</td></tr>\n", mysql_get_proto_info());
 		}
 	}
+}
+?>
+ <tr>
+  <th>Driver</th><td><?php echo $mysql_driver; ?></td>
+ </tr>
+<?php
+if (get_extension_funcs($mysql_driver))
+{
+?>
+ <tr>
+  <th>Driver Functions</th><td><ul>
+  <?php
+  foreach(get_extension_funcs($mysql_driver) as $function)
+  {
+  	echo "<li>$function</li>\n";
+  }
+  ?></ul></td>
+ </tr>
+<?php
 }
 ?>
 </table>
