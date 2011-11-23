@@ -44,7 +44,7 @@ function do_pdo($driver, $host, $db, $charset, $user, $password, $query)
 		$q = $pdo->prepare("DESCRIBE phptest;");
 		$q->execute();
 		$table_fields = $q->fetchAll(PDO::FETCH_COLUMN);
-		
+			
 		// get table data
 		$q = $pdo->query($query);
 		$results = $q->fetchAll(PDO::FETCH_ASSOC);
@@ -80,7 +80,7 @@ function do_pdo($driver, $host, $db, $charset, $user, $password, $query)
 	}
  	$db_data .= "</table>\n";
  	
- 	$db_data .= "<p>Returned " . $results->rowCount() . " rows for " . $pdo->columnCount() . " fields.</p>\n";
+ 	$db_data .= "<p>Returned " . $q->rowCount() . " rows for " . $q->columnCount() . " fields.</p>\n";
 	
 	$db_connect_result = '<img src="images/tick-clean.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:green">Successful</span></strong>';
 }
