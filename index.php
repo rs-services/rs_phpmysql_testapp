@@ -45,8 +45,14 @@
 
 <?php
 
+$db_config = 'config/db.php';
+
 // include database configuration set from DB configure database RightScript
-include 'config/db.php';
+if (!file_exists($db_config))
+{
+	echo "<p>Database configuration file missing: <code>$db_config</code> does not exist within <code>" . getenv("DOCUMENT_ROOT") . "</code>.<br />\nPlease install this file first before continuing.</p>\n"	;
+}
+include $db_config;
 
 // include app functions
 include 'functions.php';
@@ -71,14 +77,9 @@ elseif (extension_loaded('mysql'))
 	// fallback to old mysql driver
 	do_mysql($hostname_DB, $username_DB, $password_DB, $database_DB, "SELECT * FROM `phptest`;");
 }
-
-if (strpos($db_connect_result, 'Successful'))
+else
 {
-	$link = mysql_connect($hostname_DB, $username_DB, $password_DB);
-	if (!$link)
-	{
-		die('Could not connect: ' . mysql_error());
-	}
+	echo 'No pdo_mysql, mysqli or mysql extension loaded. Please load one in php.ini, then reload apache before continuing.';
 }
 ?>	
 
@@ -90,21 +91,29 @@ if (strpos($db_connect_result, 'Successful'))
   <th>Driver</th><td><?php echo $mysql_driver; ?></td>
  </tr>
 <?php
-if (mysql_get_client_info())
+// reconnect to get extra info via mysql extension
+if (strpos($db_connect_result, 'Success'))
 {
-	printf("<tr><th>Client info</th><td>%s</td></tr>\n", mysql_get_client_info());
-}
-if (mysql_get_host_info())
-{
-	printf("<tr><th>Host info</th><td>%s</td></tr>\n", mysql_get_host_info());
-}
-if (mysql_get_server_info())
-{
-	printf("<tr><th>Server version</th><td>%s</td></tr>\n", mysql_get_server_info());
-}
-if (mysql_get_proto_info())
-{
-	printf("<tr><th>Protocol version</th><td>%s</td></tr>\n", mysql_get_proto_info());
+	$link = mysql_connect($hostname_DB, $username_DB, $password_DB);
+	if ($link)
+	{
+		if (mysql_get_client_info())
+		{
+			printf("<tr><th>Client info</th><td>%s</td></tr>\n", mysql_get_client_info());
+		}
+		if (mysql_get_host_info())
+		{
+			printf("<tr><th>Host info</th><td>%s</td></tr>\n", mysql_get_host_info());
+		}
+		if (mysql_get_server_info())
+		{
+			printf("<tr><th>Server version</th><td>%s</td></tr>\n", mysql_get_server_info());
+		}
+		if (mysql_get_proto_info())
+		{
+			printf("<tr><th>Protocol version</th><td>%s</td></tr>\n", mysql_get_proto_info());
+		}
+	}
 }
 ?>
 </table>
