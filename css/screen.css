@@ -1,0 +1,120 @@
+
+*
+{
+	margin: 0;
+	padding: 0;
+}
+body
+{
+	font-family: "Helvetica", "Arial", "Verdana",sans-serif;
+	background: #dbdbdb url(http://rightscale.com/images/bg.png) 0 0 repeat-x;
+	font-size: 0.9em;
+}
+h1,h2,h3,h4,h5,h6,p
+{
+	text-align: center;
+	color: #002A5C;
+	background-color: transparent;
+	margin-top: 0.8em;
+	margin-bottom: 0.3em;
+}
+h1
+{
+	font-size: 1.3em;
+}
+h2
+{
+	text-align: left;
+	border-bottom: solid 1px #ccc;
+	font-size: 1.2em;
+	padding-bottom: 3px;
+	margin: 1em 0;
+	color: #444;
+}
+h3
+{
+	font-size: 1em;
+	margin-top: 1.2em;
+}
+table
+{
+	border-collapse: collapse;
+	border: solid 1px #ccc;
+	margin: auto;
+}
+div#header
+{
+	border-bottom: solid 1px #eee;
+	background: white;
+}
+div#header img
+{
+	display: block;
+	background: white;
+	padding: 20px;
+}
+div#header h1
+{
+	margin-top: -62px;
+	margin-bottom: 7px;
+    padding: 20px;
+}
+div#content
+{
+ background: white;
+ color: inherit;
+ width: 800px;
+ margin: auto;
+ margin-top: 5px;
+ padding: 18px;
+}
+div#footer p
+{
+ font-size: small;
+ color: #333;
+ padding: 10px 0;
+ text-align: center;
+}
+.menu
+{
+ display: table-row;
+ padding :0;
+ margin: 0;
+ list-style-type: none;
+ white-space: nowrap; 
+}
+.menu li
+{
+ display: inline;
+}
+.menu a, .menu a:visited
+{
+ display: block;
+ float: left;
+ padding: 4px 16px;
+ border-left: 1px solid #fff;
+ border-right: 1px solid #fff; 
+ text-decoration: none;
+ color: #333;
+ background: #eee;
+ font-size: 12px;
+}
+.menu a:hover
+{
+ background: #ddd;
+ color: #002A5C;
+}
+th
+{
+ text-align: left;
+}
+th, td
+{
+ border: solid 1px #ccc;
+ padding: 4px;
+ font-size: 0.8em;
+}
+td
+{
+ font-family: mono;
+}
