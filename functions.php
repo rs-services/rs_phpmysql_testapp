@@ -82,7 +82,7 @@ function do_pdo($driver, $host, $db, $charset, $user, $password, $query)
  	
  	$db_data .= "<p>Returned " . $q->rowCount() . " rows for " . $q->columnCount() . " fields.</p>\n";
 	
-	$db_connect_result = '<img src="images/tick-clean.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:green">Successful</span></strong>';
+	$db_connect_result = '<img src="images/tick-clean.png" style="margin-right:5px;margin-bottom:-3px;" alt="" /><strong><span style="color:green">Successful</span></strong>';
 }
 
 
@@ -95,11 +95,11 @@ function do_mysqli($host, $user, $password, $schema)
 	/* check connection */
 	if ($mysqli->connect_errno)
 	{
-		$db_connect_result = '<img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:red">Connect failed</span></strong><br /><p>' . $mysqli->connect_error . "</p>\n";
+		$db_connect_result = '<img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px;" alt="" /><strong><span style="color:red">Connect failed</span></strong><br /><p>' . $mysqli->connect_error . "</p>\n";
 	}
 	else
 	{
-		$db_connect_result = '<img src="images/tick-clean.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:green">Successful</span></strong>';
+		$db_connect_result = '<img src="images/tick-clean.png" style="margin-right:5px;margin-bottom:-3px;" alt="" /><strong><span style="color:green">Successful</span></strong>';
 	}
 	/* Select queries return a resultset */
 	if ($result = $mysqli->query("SELECT * FROM `phptest`;"))
@@ -131,7 +131,7 @@ function do_mysql($host, $user, $password, $database, $query)
 	$link = mysql_connect($host, $user, $password);
 	if (!$link)
 	{
-    	$db_connect_result .= '<p><img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:red">Connection failed!</span></strong></p><p>' . mysql_error() . "</p>\n";
+    	$db_connect_result .= '<p><img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px;" alt="" /><strong><span style="color:red">Connection failed!</span></strong></p><p>' . mysql_error() . "</p>\n";
     	return;
 	}
 	else
@@ -140,7 +140,7 @@ function do_mysql($host, $user, $password, $database, $query)
 		$db = mysql_select_db($database);
 		if (!$db)
 		{
-			$db_connect_result = '<p><img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:red">Could not select database!</span></strong></p><p>' . mysql_error() . "</p>\n";
+			$db_connect_result = '<p><img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px;" alt="" /><strong><span style="color:red">Could not select database!</span></strong></p><p>' . mysql_error() . "</p>\n";
 			return;
 		}
 		else
@@ -149,12 +149,12 @@ function do_mysql($host, $user, $password, $database, $query)
 			$result = mysql_query($query);
 			if (!$result)
 			{
-				$db_connect_result = '<p><img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:red">Query failed!</span></strong></p><p>' . mysql_error() . "</p>\n";
+				$db_connect_result = '<p><img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px;" alt="" /><strong><span style="color:red">Query failed!</span></strong></p><p>' . mysql_error() . "</p>\n";
 				return;
 			}
 			else
 			{
-				$db_connect_result = '<p><img src="images/tick-clean.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:green">Successful</span></strong></p>';
+				$db_connect_result = '<p><img src="images/tick-clean.png" style="margin-right:5px;margin-bottom:-3px;" alt="" /><strong><span style="color:green">Successful</span></strong></p>';
 			}
 		}
 	}

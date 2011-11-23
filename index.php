@@ -121,13 +121,17 @@ if (get_extension_funcs($mysql_driver))
 {
 ?>
  <tr>
-  <th>Driver Functions</th><td><ul>
+  <th>Driver Functions</th>
+   <td>
+    <ul>
   <?php
   foreach(get_extension_funcs($mysql_driver) as $function)
   {
   	echo "<li>$function</li>\n";
   }
-  ?></ul></td>
+  ?>
+   </ul>
+  </td>
  </tr>
 <?php
 }
@@ -167,12 +171,17 @@ echo $db_data;
 <?php
 foreach (get_loaded_extensions() as $i => $ext) 
 { 
-	echo '<tr><th>' . $ext . '</th>'; 
+	echo " <tr>\n"; 
+	echo '  <th>' . $ext . '</th>'; 
 	if (phpversion($ext))
 	{
-		echo '<td>' . phpversion($ext) . '</td>';
+		echo '<td>' . phpversion($ext) . "</td>\n";
 	}
-	echo "</td></tr>\n"; 
+	else
+	{
+		echo '<td style="background:#eee">&nbsp;</td>' . "\n";
+	}
+	echo " </tr>\n"; 
 } 
 ?>
 </table>
