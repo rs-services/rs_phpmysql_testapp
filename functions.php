@@ -126,29 +126,38 @@ function do_mysqli($host, $user, $password, $schema)
 function do_mysql($host, $user, $password, $database, $query)
 {
 	global $db_connect_result, $db_data;
-	
+
 	// connect to db server
 	$link = mysql_connect($host, $user, $password);
 	if (!$link)
 	{
-    	$db_connect_result .= '<strong><span style="color:red">Connect failed</span></strong>: '	. mysql_error();
+    	$db_connect_result .= '<p><img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:red">Connection failed!</span></strong></p><p>' . mysql_error() . "</p>\n";
+    	return;
 	}
-	
-	// select database
-	$db = mysql_select_db($database);
-	if (!$db)
+	else
 	{
-		$db_connect_result .= '<strong><span style="color:red">Could not select database.</span></strong>: ' . mysql_error();
+		// select database
+		$db = mysql_select_db($database);
+		if (!$db)
+		{
+			$db_connect_result = '<p><img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:red">Could not select database!</span></strong></p><p>' . mysql_error() . "</p>\n";
+			return;
+		}
+		else
+		{
+			// perform SQL query
+			$result = mysql_query($query);
+			if (!$result)
+			{
+				$db_connect_result = '<p><img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:red">Query failed!</span></strong></p><p>' . mysql_error() . "</p>\n";
+				return;
+			}
+			else
+			{
+				$db_connect_result = '<p><img src="images/tick-clean.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:green">Successful</span></strong></p>';
+			}
+		}
 	}
-
-	// performi SQL query
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$db_connect_result .= "<p>Query failed: " . mysql_error() . "</p>\n";
-	}	
-
-	$db_connect_result = '<img src="images/tick-clean.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:green">Successful</span></strong>';
 
 	// create html from results
 	// create data table
