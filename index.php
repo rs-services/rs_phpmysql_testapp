@@ -57,24 +57,28 @@ if (extension_loaded('pdo_mysql'))
 {
 	$mysql_driver = 'pdo_mysql';
 	// try PDO
-	do_pdo('mysql', $hostname_DB, 'phptest', 'UTF-8', $username_DB, $password_DB);
+	do_pdo('mysql', $hostname_DB, $database_DB, 'UTF-8', $username_DB, $password_DB, "SELECT * FROM `phptest`;");
 }
 elseif (extension_loaded('mysqli'))
 {
 	$mysql_driver = 'mysqli';
 	// use mysqli driver
-    do_mysqli($hostname_DB, $username_DB, $password_DB, 'phptest');
+    do_mysqli($hostname_DB, $username_DB, $password_DB, $database_DB);
 }
-else
+elseif (extension_loaded('mysql'))
 {
 	$mysql_driver = 'mysql';
 	// fallback to old mysql driver
-	do_mysql($hostname_DB, $username_DB, $password_DB, 'phptest');
+	do_mysql($hostname_DB, $username_DB, $password_DB, $database_DB, "SELECT * FROM `phptest`;");
 }
 
-$link = mysql_connect($hostname_DB, $username_DB, $password_DB);
-if (!$link) {
-    die('Could not connect: ' . mysql_error());
+if (strpos($db_connect_result, 'Successful'))
+{
+	$link = mysql_connect($hostname_DB, $username_DB, $password_DB);
+	if (!$link)
+	{
+		die('Could not connect: ' . mysql_error());
+	}
 }
 ?>	
 
@@ -86,10 +90,22 @@ if (!$link) {
   <th>Driver</th><td><?php echo $mysql_driver; ?></td>
  </tr>
 <?php
-printf("<tr><th>Host info</th><td>%s</td></tr>\n", mysql_get_host_info());
-printf("<tr><th>Client info</th><td>%s</td></tr>\n", mysql_get_client_info());
-printf("<tr><th>Server version</th><td>%s</td></tr>\n", mysql_get_server_info());
-printf("<tr><th>Protocol version</th><td>%s</td></tr>\n", mysql_get_proto_info());
+if (mysql_get_client_info())
+{
+	printf("<tr><th>Client info</th><td>%s</td></tr>\n", mysql_get_client_info());
+}
+if (mysql_get_host_info())
+{
+	printf("<tr><th>Host info</th><td>%s</td></tr>\n", mysql_get_host_info());
+}
+if (mysql_get_server_info())
+{
+	printf("<tr><th>Server version</th><td>%s</td></tr>\n", mysql_get_server_info());
+}
+if (mysql_get_proto_info())
+{
+	printf("<tr><th>Protocol version</th><td>%s</td></tr>\n", mysql_get_proto_info());
+}
 ?>
 </table>
 
