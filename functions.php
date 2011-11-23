@@ -1,15 +1,100 @@
 <?php
 
+$db_data = false;
+
+function get_trace($err)
+{
+	$trace = '<table>';
+	foreach ($err->getTrace() as $a => $b)
+	{
+		foreach ($b as $c => $d)
+		{
+			if ($c == 'args')
+			{
+				foreach ($d as $e => $f)
+				{
+					$trace .= '<tr><td>' . strval($a) . '#</td><td align="right">args:</td><td>' . $e . ':</td><td>' . $f . '</td></tr>';
+				}
+			}
+			else
+			{
+				$trace .= '<tr><td>' . strval($a) . '#</td><td align="right">' . $c . ':</td><td></td><td>' . $d . '</td>';
+			}
+		}
+	}
+	$trace .= '</table>';
+	$return = '<fieldset style="width:66%;margin:auto"><legend>[PHP PDO Error ' . strval($err->getCode()) . '</legend><table><tr><td align="right">Message:</td><td>' . $err->getMessage() . '</td></tr><tr><td align="right">Code:</td><td>' . strval($err->getCode()) . '</td></tr><tr><td align="right">File:</td><td>' . $err->getFile() . '</td></tr><tr><td align="right">Line:</td><td>' . strval($err->getLine()) . '</td></tr><tr><td align="right">Trace:</td><td>' . $trace . '</td></tr></table></fieldset>';
+	return $return;
+}
+
+
+function do_pdo($driver, $host, $db, $charset, $user, $password, $query)
+{
+	global $db_connect_result, $db_data;
+
+	try
+	{
+		// create new pdo object
+		$pdo = new PDO("$driver:host=$host;dbname=$db;charset=$charset", $user, $password);
+		
+		// Set Errorhandling to Exception
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		
+		// get fields from table
+		$q = $pdo->prepare("DESCRIBE phptest;");
+		$q->execute();
+		$table_fields = $q->fetchAll(PDO::FETCH_COLUMN);
+		
+		// get table data
+		$q = $pdo->query($query);
+		$results = $q->fetchAll(PDO::FETCH_ASSOC);
+		
+		// close the connection
+		$pdo = null;
+	}
+	catch (PDOException $e)
+	{
+		$db_connect_result = '<p style="text-align:center"><img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:red">Connect failed!</span></strong></p>' . "\n	";
+		$db_connect_result .= get_trace($e);
+		return;
+	}
+	
+	// create html data table
+	$db_data .= "<table>\n";
+   	$db_data .= " <tr>\n  ";
+	// add table headers from cols
+	foreach($table_fields as $field)
+	{
+  		$db_data .= '<th>' . $field . '</th>';
+    }
+    $db_data .= "\n </tr>\n";
+	// iterate through each record
+   	foreach($results as $a)
+	{
+    	$db_data .= " <tr>\n  ";
+        foreach($a as $v)
+    	{
+    		$db_data .= '<td>' . $v . '</td>';
+    	}
+    	$db_data .= "\n </tr>\n";
+	}
+ 	$db_data .= "</table>\n";
+ 	
+ 	//$db_data .= "<p>Returned " . $results->rowCount() . " rows for " . $pdo->columnCount() . " fields.</p>\n";
+	$db_connect_result = '<img src="images/tick-clean.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:green">Successful</span></strong>';
+}
+
+
 function do_mysqli($host, $user, $password, $schema)
 {
-	global $db_connect_result, $db_select_table_result, $db_data;
-	$db_data = false;
+	global $db_connect_result, $db_data;
 	
 	$mysqli = new mysqli($host, $user, $password, $schema);
 	
 	/* check connection */
-	if ($mysqli->connect_errno) {
-		$db_connect_result = '<img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:red">Connect failed</span></strong>: '	. $mysqli->connect_error;
+	if ($mysqli->connect_errno)
+	{
+		$db_connect_result = '<img src="images/red-cross.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:red">Connect failed</span></strong><br /><p>' . $mysqli->connect_error . "</p>\n";
 	}
 	else
 	{
@@ -36,29 +121,42 @@ function do_mysqli($host, $user, $password, $schema)
 	}
 }
 
-function do_mysql($host, $user, $password)
+
+function do_mysql($host, $user, $password, $database, $query)
 {
-	global $db_connect_result, $db_select_table_result, $db_data;
-	$db_data = false;
-
-	$query = "SELECT * FROM `phptest`;";
-
-	// connected to db server
-	$link = mysql_connect($host, $user, $password)
-		or $db_connect_result .= '<strong><span style="color:red">Connect failed</span></strong>: '	. mysql_error();
-
+	global $db_connect_result, $db_data;
+	
+	// connect to db server
+	$link = mysql_connect($host, $user, $password);
+	if (!$link)
+	{
+    	$db_connect_result .= '<strong><span style="color:red">Connect failed</span></strong>: '	. mysql_error();
+	}
+	
 	// select database
-	mysql_select_db('phptest')
-		or $db_connect_result .= '<strong><span style="color:red">Could not select database.</span></strong>: ';
+	$db = mysql_select_db($database);
+	if (!$db)
+	{
+		$db_connect_result .= '<strong><span style="color:red">Could not select database.</span></strong>: ' . mysql_error();
+	}
 
 	// performi SQL query
-	$result = mysql_query($query)
-		or $db_connect_result .= 'Query failed: ' . mysql_error();
-		
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$db_connect_result .= "<p>Query failed: " . mysql_error() . "</p>\n";
+	}	
+
+	$db_connect_result = '<img src="images/tick-clean.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:green">Successful</span></strong>';
+
 	// create html from results
+	// create data table
+	$db_data .= "<table>\n";
+   	$db_data .= " <tr>\n  ";
 	$line_count = 0;
 	while ($line = mysql_fetch_array($result, MYSQL_ASSOC))
 	{
+		// only print array keys (fields) on first iteration
 		if ($line_count == 0)
 		{
 			$db_data .= " <tr>\n";
@@ -76,22 +174,15 @@ function do_mysql($host, $user, $password)
 		$db_data .= " </tr>\n";
 		$line_count++;
 	}
-		
+ 	$db_data .= "</table>\n";
+ 	
+ 	$db_data .= "<p>Returned " . mysql_num_rows($result) . " rows for " . mysql_num_fields($result) . " fields.</p>\n";
+ 	
 	// Free resultset
 	mysql_free_result($result);
 
 	// Closing connection
 	mysql_close($link);
-}
-
-function do_pdo($driver, $host, $db, $charset, $user, $password)
-{
-	global $db_connect_result, $db_select_table_result, $db_data;
-	$db_data = false;
-	
-	$db = new PDO("$driver:host=$host;dbname=$db;charset=$charset", $user, $password);
-	$results = $db->query("SELECT * FROM `phptest`;");
-	
 }
 
 ?>
