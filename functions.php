@@ -65,9 +65,9 @@ function do_pdo($driver, $host, $db, $charset, $user, $password, $query)
 	// add table headers from cols
 	foreach($table_fields as $field)
 	{
-  		$db_data .= '<th>' . $field . '</th>';
-    }
-    $db_data .= "\n </tr>\n";
+		$db_data .= '<th>' . $field . '</th>';
+	}
+	$db_data .= "\n </tr>\n";
 	// iterate through each record
    	foreach($results as $a)
 	{
@@ -80,7 +80,8 @@ function do_pdo($driver, $host, $db, $charset, $user, $password, $query)
 	}
  	$db_data .= "</table>\n";
  	
- 	//$db_data .= "<p>Returned " . $results->rowCount() . " rows for " . $pdo->columnCount() . " fields.</p>\n";
+ 	$db_data .= "<p>Returned " . $results->rowCount() . " rows for " . $pdo->columnCount() . " fields.</p>\n";
+	
 	$db_connect_result = '<img src="images/tick-clean.png" style="margin-right:5px;margin-bottom:-3px; alt="" /><strong><span style="color:green">Successful</span></strong>';
 }
 
