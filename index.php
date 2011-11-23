@@ -150,9 +150,14 @@ echo $db_data;
 <table>
 <?php
 foreach (get_loaded_extensions() as $i => $ext) 
- { 
-    echo '<tr><th>' . $ext . '</th><td>' . phpversion($ext). "</td></tr>\n"; 
- } 
+{ 
+	echo '<tr><th>' . $ext . '</th>'; 
+	if (phpversion($ext))
+	{
+		echo '<td>' . phpversion($ext) . '</td>';
+	}
+	echo "</td></tr>\n"; 
+} 
 ?>
 </table>
 
