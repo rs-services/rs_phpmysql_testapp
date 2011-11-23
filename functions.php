@@ -4,6 +4,8 @@ $db_data = false;
 
 function get_trace($err)
 {
+	global $password_DB;	// for masking password if found in traceback
+	
 	$trace = '<table>';
 	foreach ($err->getTrace() as $a => $b)
 	{
@@ -13,6 +15,7 @@ function get_trace($err)
 			{
 				foreach ($d as $e => $f)
 				{
+					$f = str_replace($password_DB, '****', $f);
 					$trace .= '<tr><td>' . strval($a) . '#</td><td align="right">args:</td><td>' . $e . ':</td><td>' . $f . '</td></tr>';
 				}
 			}
@@ -23,7 +26,7 @@ function get_trace($err)
 		}
 	}
 	$trace .= '</table>';
-	$return = '<fieldset style="display:inline"><legend>[PHP PDO Error ' . strval($err->getCode()) . '</legend><table><tr><td align="right">Message:</td><td>' . $err->getMessage() . '</td></tr><tr><td align="right">Code:</td><td>' . strval($err->getCode()) . '</td></tr><tr><td align="right">File:</td><td>' . $err->getFile() . '</td></tr><tr><td align="right">Line:</td><td>' . strval($err->getLine()) . '</td></tr><tr><td align="right">Trace:</td><td>' . $trace . '</td></tr></table></fieldset>';
+	$return = '<fieldset style="display:inline"><legend>[PHP PDO Error ' . strval($err->getCode()) . '</legend><table><tr><td align="right">Message:</td><td><strong>' . $err->getMessage() . '</strong></td></tr><tr><td align="right">Code:</td><td>' . strval($err->getCode()) . '</td></tr><tr><td align="right">File:</td><td>' . $err->getFile() . '</td></tr><tr><td align="right">Line:</td><td>' . strval($err->getLine()) . '</td></tr><tr><td align="right">Trace:</td><td>' . $trace . '</td></tr></table></fieldset>';
 	return $return;
 }
 
