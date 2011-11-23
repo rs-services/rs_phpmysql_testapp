@@ -4,7 +4,7 @@
 
 <head>
  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
- <title>Simple PHP/MySQL Test Application</title>
+ <title><?php echo gethostname(); ?> - PHP/MySQL Test Application</title>
  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css" />
 </head>
 
