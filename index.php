@@ -4,7 +4,7 @@
 
 <head>
  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
- <title><?php echo gethostname(); ?> - PHP/MySQL Test Application</title>
+ <title><?php if (function_exists('gethostname')) { echo gethostname(); } else { php_uname("n"); } ?> - PHP/MySQL Test Application</title>
  <link rel="stylesheet" type="text/css" media="screen" href="css/screen.css" />
 </head>
 
@@ -32,7 +32,7 @@
   <th>Operating System</th><td><?php echo PHP_OS; ?></td>
  </tr>
  <tr>
-  <th>Hostname</th><td><?php echo gethostname(); ?></td>
+  <th>Hostname</th><td><?php if (function_exists('gethostname')) { echo gethostname(); } else { php_uname("n"); } ?></td>
  </tr>
  <tr>
   <th>uname</th><td><?php echo php_uname(); ?></td>
