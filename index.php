@@ -76,7 +76,7 @@ elseif (extension_loaded('mysql'))
 {
 	$mysql_driver = 'mysql';
 	// fallback to old mysql driver
-	do_mysql($hostname_DB, $username_DB, $password_DB, $database_DB, "SELECT * FROM `Country`;");
+	do_mysql($hostname_DB, $username_DB, $password_DB, $database_DB, "SELECT `Code`,`Name`,`Continent`,`Region`,`SurfaceArea`,`IndepYear`,`Population`,`LifeExpectancy`,`GNP` FROM `Country`;");
 }
 else
 {
