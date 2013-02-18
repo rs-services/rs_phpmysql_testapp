@@ -59,11 +59,12 @@ include 'functions.php';
 
 // determine best mysql driver to use
 //print_r(get_loaded_extensions()); exit;
+// for PDO and mysql drivers, world db dump is assumed (country table)
 if (extension_loaded('pdo_mysql'))
 {
 	$mysql_driver = 'pdo_mysql';
 	// try PDO
-	do_pdo('mysql', $hostname_DB, $database_DB, 'utf8', $username_DB, $password_DB, "SELECT * FROM `phptest`;");
+	do_pdo('mysql', $hostname_DB, $database_DB, 'utf8', $username_DB, $password_DB, "SELECT * FROM `Country`;");
 }
 elseif (extension_loaded('mysqli'))
 {
@@ -75,7 +76,7 @@ elseif (extension_loaded('mysql'))
 {
 	$mysql_driver = 'mysql';
 	// fallback to old mysql driver
-	do_mysql($hostname_DB, $username_DB, $password_DB, $database_DB, "SELECT * FROM `phptest`;");
+	do_mysql($hostname_DB, $username_DB, $password_DB, $database_DB, "SELECT * FROM `Country`;");
 }
 else
 {
