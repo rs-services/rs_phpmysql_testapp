@@ -76,7 +76,7 @@ elseif (extension_loaded('mysql'))
 {
 	$mysql_driver = 'mysql';
 	// fallback to old mysql driver
-	do_mysql($hostname_DB, $username_DB, $password_DB, $database_DB, "SELECT `Code`,`Name`,`Continent`,`Region`,`SurfaceArea`,`IndepYear`,`Population`,`LifeExpectancy`,`GNP` FROM `Country`;");
+	do_mysql($hostname_DB, $username_DB, $password_DB, $database_DB, "SELECT * FROM `Country`;");
 }
 else
 {
@@ -147,10 +147,12 @@ if (strpos($db_connect_result, 'Successful'))
 <h4>
  <em style="font-weight:normal">world.Country</em>
 </h4>
+<div style="width:800px; height:200px; overflow-y:auto; overflow-x:auto; clip-rect:(0px, 800px, 800px, 0px)">
 <?php
 echo $db_data;
 }
 ?>
+</div>
 
 <h2 id="php">PHP</h2>
 
