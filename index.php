@@ -63,7 +63,7 @@ if (extension_loaded('pdo_mysql'))
 {
 	$mysql_driver = 'pdo_mysql';
 	// try PDO
-	do_pdo('mysql', $hostname_DB, $database_DB, 'UTF-8', $username_DB, $password_DB, "SELECT * FROM `phptest`;");
+	do_pdo('mysql', $hostname_DB, $database_DB, 'utf8', $username_DB, $password_DB, "SELECT * FROM `phptest`;");
 }
 elseif (extension_loaded('mysqli'))
 {
