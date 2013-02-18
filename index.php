@@ -145,7 +145,7 @@ if (strpos($db_connect_result, 'Successful'))
 ?>
 <h3>Test Data</h3>
 <h4>
- <em style="font-weight:normal">phptest</em>
+ <em style="font-weight:normal">world.Country</em>
 </h4>
 <?php
 echo $db_data;
