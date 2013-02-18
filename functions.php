@@ -44,7 +44,7 @@ function do_pdo($driver, $host, $db, $charset, $user, $password, $query)
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		
 		// get fields from table
-		$q = $pdo->prepare("DESCRIBE phptest;");
+		$q = $pdo->prepare("DESCRIBE Country;");
 		$q->execute();
 		$table_fields = $q->fetchAll(PDO::FETCH_COLUMN);
 			
