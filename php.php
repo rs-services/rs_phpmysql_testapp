@@ -1,3 +1,5 @@
+<?php require_once("header.php.inc"); ?>
+
 <h2 id="php">PHP</h2>
 
 <h3>Versions</h3>
@@ -40,3 +42,5 @@ foreach (get_loaded_extensions() as $i => $ext)
 //phpinfo(INFO_MODULES);
 ?>
 -->
+
+<?php require_once("footer.php.inc"); ?>

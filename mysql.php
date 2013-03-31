@@ -1,3 +1,5 @@
+<?php require_once("header.php.inc"); ?>
+
 <h2 id="mysql">MySQL</h2>
 
 <h3>Connectivity</h3>
@@ -112,3 +114,5 @@ echo $db_data;
 }
 ?>
 </div>
+
+<?php require_once("footer.php.inc"); ?>
