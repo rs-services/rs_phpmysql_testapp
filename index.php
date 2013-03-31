@@ -13,7 +13,7 @@
   <th>uname</th><td><?php echo php_uname(); ?></td>
  </tr>
  <tr>
-  <th>LSB</th><td><pre><?php shell_exec("lsb_release -i -d -r -c"); ?></pre></td>
+  <th>LSB</th><td><pre><?php echo shell_exec("lsb_release -i -d -r -c"); ?></pre></td>
  </tr>
 </table>
 
