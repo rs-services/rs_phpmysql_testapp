@@ -25,19 +25,19 @@ if (extension_loaded('pdo_mysql'))
 {
 	$mysql_driver = 'pdo_mysql';
 	// try PDO
-	do_pdo('mysql', $hostname_DB, $database_DB, 'utf8', $username_DB, $password_DB, "SELECT * FROM `Country`;");
+	do_pdo('mysql', $db['host'], $db['schema'], 'utf8', $db['username'], $db['password'], "SELECT * FROM `Country`;");
 }
 elseif (extension_loaded('mysqli'))
 {
 	$mysql_driver = 'mysqli';
 	// use mysqli driver
-    do_mysqli($hostname_DB, $username_DB, $password_DB, $database_DB);
+    do_mysqli($db['host'], $db['username'], $db['password'], $db['schema']);
 }
 elseif (extension_loaded('mysql'))
 {
 	$mysql_driver = 'mysql';
 	// fallback to old mysql driver
-	do_mysql($hostname_DB, $username_DB, $password_DB, $database_DB, "SELECT * FROM `Country`;");
+	do_mysql($db['host'], $db['username'], $db['password'], $db['schema'], "SELECT * FROM `Country`;");
 }
 else
 {
