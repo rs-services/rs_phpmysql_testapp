@@ -6,7 +6,7 @@
 
 <?php
 
-$db_config = 'config/db.php';
+$db_config = 'config.php';
 
 // include database configuration set from DB configure database RightScript
 if (!file_exists($db_config))
