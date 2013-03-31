@@ -14,7 +14,7 @@
  <img src="http://www.rightscale.com/images/logo.gif" alt="" />
  <h1>PHP/MySQL Test Application</h1>
  <ul class="menu">
-  <li><a style="border-left:solid 20px white" href="#host"><span>Host</span></a></li>
+  <li><a style="border-left:solid 20px white" href="index.php"><span>Host</span></a></li>
   <li><a href="php.php"><span>PHP</span></a></li>
   <li><a href="mysql.php"><span>MySQL</span></a></li>
   <li><a href="phpinfo.php"><span>phpinfo()</span></a></li>
