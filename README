@@ -1,0 +1,7 @@
+The database used for the MySQL test is from:
+
+* http://dev.mysql.com/doc/index-other.html
+* http://dev.mysql.com/doc/world-setup/en/index.html
+* http://dev.mysql.com/doc/refman/5.1/en/mysqlimport.html
+
+Ensure your database has 'world' available for a successful test with an available driver.
