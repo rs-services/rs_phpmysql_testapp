@@ -22,7 +22,7 @@ if (!file_exists($db_config))
         }
         else
         {
-                echo "<p>Database configuration file missing: <code>$db_config</code> does not exist within <code>" . getenv("DOCUMENT_ROOT") . "</code>.<br />\nPlease install this file first before continuing.</p>\n"
+                echo "<p>Database configuration file missing: <code>$db_config</code> does not exist within <code>" . getenv("DOCUMENT_ROOT") . "</code>.<br />\nPlease install this file first before continuing.</p>\n";
         }
 }
 else
