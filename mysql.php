@@ -11,9 +11,24 @@ $db_config = 'config.php';
 // include database configuration set from DB configure database RightScript
 if (!file_exists($db_config))
 {
-	echo "<p>Database configuration file missing: <code>$db_config</code> does not exist within <code>" . getenv("DOCUMENT_ROOT") . "</code>.<br />\nPlease install this file first before continuing.</p>\n"	;
+        // RightScale ServerTemplates configure config/db.php by Chef or RightScript
+        if (file_exists('config/db.php'))
+        {
+                require_once('config/db.php');
+                $db['host'] = $hostname_DB;
+                $db['schema'] = $database_DB;
+                $db['username'] = $username_DB;
+                $db['password'] = $password_DB;
+        }
+        else
+        {
+                echo "<p>Database configuration file missing: <code>$db_config</code> does not exist within <code>" . getenv("DOCUMENT_ROOT") . "</code>.<br />\nPlease install this file first before continuing.</p>\n"
+        }
 }
-include $db_config;
+else
+{
+        include $db_config;
+}
 
 // include app functions
 include 'functions.php';
