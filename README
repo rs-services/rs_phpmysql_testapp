@@ -1,7 +1,8 @@
-The database used for the MySQL test is from:
+The database used for the MySQL test is the 'world database' from:
 
 * http://dev.mysql.com/doc/index-other.html
 * http://dev.mysql.com/doc/world-setup/en/index.html
 * http://dev.mysql.com/doc/refman/5.1/en/mysqlimport.html
 
-Ensure your database has 'world' available for a successful test with an available driver.
+Ensure your database has the schema, 'world' available for a successful test with an available driver.
+Using the InnoDB version is recommended. A dump for MyISAM is available if your server does not support InnoDB.
